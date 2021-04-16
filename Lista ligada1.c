@@ -2,20 +2,38 @@
 #include<stdlib.h>
 
 
-typedef struct no{      
+typedef struct no{      //definir nó como um tipo de variavel e estrutura
     int valor;
-    struct no *proximo;  
+    struct no *proximo;                         //obs é preciso struct ?
 }no;
 
-typedef struct listaL{
+typedef struct listaL{  //definir ListaL como um tipo de variavel e estrutura
     no *inicio, *fim;
     int tamanho;
 }listaL;
 
+no *criano (int dado){                                //Inicializando e criando o nó
+    no *novo =(no*)malloc(sizeof(no));                //Alocando na memória
+    novo->valor = dado;
+    novo->proximo = NULL;
+    return novo;
+}
+
+listaL *criaLista (){                                 //Inicializando e criando a lista
+    listaL *nova =(listaL*)malloc(sizeof(listaL));    //Alocando na memória
+    nova ->inicio = NULL;
+    nova ->fim = NULL;
+    nova ->tamanho = 0;
+    return nova; 
+}
+
+//limpa memoria
+/*listaL *limpaLista (){
+    ListaL
+}*/
 
 void inserirnoinicio (listaL *lista, int dado){
-    no *novo = (no*)malloc(sizeof(no));
-    novo->valor = dado;
+    no *novo = criano(dado);
     if (lista->inicio == NULL){
         novo->proximo = NULL;
         lista->inicio = novo;
@@ -29,15 +47,13 @@ void inserirnoinicio (listaL *lista, int dado){
 }
 
 void inserirnofim (listaL *lista, int dado){
-    no *novo = (no*)malloc(sizeof(no));
-    novo->valor = dado;
-    novo->proximo = NULL;
+    no *novo = criano(dado);
 
-    if (lista->inicio == NULL){   //Se estiver vazia
+    if (lista->inicio == NULL){        //Se estiver vazia
         lista->inicio = novo;
         lista->fim = novo;
     }
-    else{                           //Não estiver vazia
+    else{                              //Não estiver vazia
         lista->fim->proximo = novo;
         lista->fim =  novo;
     }
@@ -48,7 +64,7 @@ void removerinicio (listaL *lista){
     no *inicio = lista->inicio;
     no *remover = NULL;
 
-    if(inicio != NULL){ /*remover se for o primeiro elemento*/
+    if(inicio != NULL){                  //remover se for o primeiro elemento
         remover = lista->inicio;
         lista->inicio = remover->proximo;
         if (lista->inicio == NULL){
@@ -135,12 +151,12 @@ void imprimircompleto (listaL *lista){
     printf("\n");
 }
 
+
+
 int main(){
-    listaL listaligada;
+    listaL *listaligada = criaLista();
     int opcao, dado;
 
-    listaligada.inicio = NULL;
-    listaligada.tamanho = 0;
 
     do {
         printf(" 1 - Inserir no inicio\n 2 - Inserir no fim \n 3 - Remover do Inicio\n 4 - Remover do fim\n 5 - Remover algum outro valor \n 6 - Quantidade de valores na lista\n 7 - Lista completa\n 8 - Imprimir Lista Completa e quantidade\n 0 - Sair\n");

@@ -2,7 +2,31 @@
 #include <stdlib.h>
 #include <locale.h>
 #include<stdbool.h>
+#include <time.h>
 
+//-------------------------------------------------Gera numero
+bool Existe(int valores[],int tam, int valor){
+    for(int i = 0;i<tam;i++){
+        if(valores[i]==valor)
+            return true;
+    }
+    return false;
+}
+
+void GeraAleatorios(int numeros[],int quantNumeros,int Limite){
+    srand(time(NULL));
+
+    int v;
+    for(int i=0;i<quantNumeros;i++){
+        v = rand() % Limite;
+        while(Existe(numeros,i,v)){
+            v = rand() % Limite;
+        }
+        numeros[i] = v;
+    }
+
+}
+//------------------------------------------------------------------------------
 
 void Quicksort(int numeros[], int inicio, int fim)
 {
@@ -49,10 +73,15 @@ int main(int argc, char *argv[])
     printf("Qual é o tamanho da array ?\n");
     scanf("%d",&tam);
     numeros=(int*)malloc(tam*sizeof(int));
+
+	/*
     printf("Entre com os números para preencher a array:\n");
     for(i=0; i<tam; i++){
         scanf("%d",& numeros[i]);
-    }
+    }*/
+
+	//---------------Gerando  numeros
+    GeraAleatorios(numeros,tam,tam);
 
 	Quicksort(numeros, 0, tam);
 	
